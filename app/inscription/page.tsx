@@ -9,6 +9,8 @@ import { getMontantCours } from "../components/GetMontant"
 import { useFormStore } from "../state/useFormStore"
 import FicheAdminForm from "../components/form/FicheAdminForm"
 import ReglementModal from "../components/form/ReglementModal"
+import InscriptionCards from "../components/ui/InscriptionCard"
+import TarifsEtHoraires from "../components/ui/ImageInscription"
 
 export default function InscriptionPage() {
   const parent = useFormStore((state) => state.parent)
@@ -109,6 +111,7 @@ export default function InscriptionPage() {
       </button>
 
       {message && <p className="mt-2 text-center">{message}</p>}
+      <TarifsEtHoraires />
 
   
 

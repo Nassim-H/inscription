@@ -43,6 +43,7 @@ export interface Enfant {
   date_naissance?: string
   lieu_naissance?: string
   ecole?: string
+  asso?: string
   interets?: string
   extrascolaires?: string
   maladies?: string
@@ -192,5 +193,80 @@ export const useFormStore = create<FormState>((set) => ({
           personnesAutorisees: updated
         }
       }
+      
     })
+
+    
 }))
+
+
+type CoursInfo = {
+  module: string
+  horaires: string[]
+  prix: number
+}
+
+export function getCoursInfos(age: number): CoursInfo[] {
+  const infos: CoursInfo[] = []
+
+  if (age >= 4 && age <= 6) {
+    infos.push({
+      module: "Éducation religieuse",
+      horaires: ["🕒 Dimanche (2h)", "📘 Avec APAS (langue arabe)"],
+      prix: 120
+    })
+    infos.push({
+      module: "Dar Al Coran – Scolaire",
+      horaires: ["🗓 Mercredi 10h–11h30", "🗓 Samedi 14h–15h30 ou 15h30–17h"],
+      prix: 120
+    })
+
+    infos.push({
+      module: "Dar Al Coran – Vacances",
+      horaires: ["🗓 Lundi à Jeudi", "🕒 2h après la prière de Dhoher"],
+      prix: 40
+    })
+  }
+
+  if (age >= 7 && age <= 14) {
+    infos.push({
+      module: "Éducation religieuse",
+      horaires: ["🕒 Dimanche (1h)", "➕ Atelier 2h/mois samedi 11h–13h"],
+      prix: 120
+    })
+
+    infos.push({
+      module: "Dar Al Coran – Scolaire",
+      horaires: ["🗓 Mercredi 10h–11h30", "🗓 Samedi 14h–15h30 ou 15h30–17h"],
+      prix: 120
+    })
+
+    infos.push({
+      module: "Dar Al Coran – Vacances",
+      horaires: ["🗓 Lundi à Jeudi", "🕒 2h après la prière de Dhoher"],
+      prix: 40
+    })
+  }
+
+  if (age > 14) {
+    infos.push({
+      module: "Éducation religieuse +14 ans",
+      horaires: ["🕒 Vendredi 18h30–20h30"],
+      prix: 120
+    })
+
+    infos.push({
+      module: "Dar Al Coran – Scolaire",
+      horaires: ["🗓 Mercredi 14h–15h30", "🗓 Samedi 15h30–17h"],
+      prix: 120
+    })
+
+    infos.push({
+      module: "Dar Al Coran – Vacances",
+      horaires: ["🗓 Lundi à Jeudi", "🕒 2h après la prière de Dhoher"],
+      prix: 40
+    })
+  }
+
+  return infos
+}

@@ -5,7 +5,8 @@ import { getMontantCours } from "../GetMontant"
 import Input from "../ui/Input"
 import Label from "../ui/Label"
 import CoursSelector from "./CourSelector"
-import { Enfant } from "../../state/useFormStore"
+import { Enfant, getCoursInfos } from "../../state/useFormStore"
+import InscriptionCards from "../ui/InscriptionCard"
 
 interface EnfantFormProps {
   index: number
@@ -21,6 +22,8 @@ export default function EnfantForm({ index, enfantData, onChange }: EnfantFormPr
   (e: React.ChangeEvent<HTMLInputElement>) => 
     handleFieldChange(field, e.target.value)
 
+const ageInt = parseInt(enfantData.age || "0")
+const coursInfos = getCoursInfos(ageInt)
 
   useEffect(() => {
   const montant = getMontantCours(enfantData.cours || [])
@@ -37,7 +40,7 @@ export default function EnfantForm({ index, enfantData, onChange }: EnfantFormPr
       <h3 className="text-lg font-semibold">Enfant {index + 1}</h3>
 
       <Input id={`nom_${index}`} label="Nom" value={enfantData.nom} onChange={bindText("nom")} required />
-      <Input id={`prenom_${index}`} label="Prénom" value={enfantData.prenom} onChange={bindText("nom")} required />
+      <Input id={`prenom_${index}`} label="Prénom" value={enfantData.prenom} onChange={bindText("prenom")} required />
 
       <div>
         <Label htmlFor={`genre_${index}`}>Fille / Garçon</Label>
@@ -57,8 +60,9 @@ export default function EnfantForm({ index, enfantData, onChange }: EnfantFormPr
       <Input id={`age_${index}`} label="Âge" type="number" value={enfantData.age ?? ""} onChange={bindText("age")} required className="w-24" />
       <Input id={`date_naissance_${index}`} label="Date de naissance" type="date" value={enfantData.date_naissance ?? ""} onChange={bindText("date_naissance")} />
       <Input id={`lieu_naissance_${index}`} label="Lieu de naissance" value={enfantData.lieu_naissance ?? ""} onChange={bindText("lieu_naissance")} />
-      <Input id={`ecole_${index}`} label="École fréquentée (2024/2025)" value={enfantData.ecole ?? ""} onChange={bindText("ecole")} />
+      <Input id={`ecole_${index}`} label="École fréquentée (2025/2026)" value={enfantData.ecole ?? ""} onChange={bindText("ecole")} />
       <Input id={`classe_${index}`} label="Classe" value={enfantData.classe} onChange={bindText("classe")} />
+      <Input id={`asso_${index}`} label="Association religieuse fréquentée ?" value={enfantData.asso} onChange={bindText("asso")} />
       <Input id={`interets_${index}`} label="Centres d’intérêts" value={enfantData.interets} onChange={bindText("nom")} />
       <Input id={`extrascolaires_${index}`} label="Activités extra-scolaires" value={enfantData.extrascolaires} onChange={bindText("extrascolaires")}/>
       <Input id={`maladies_${index}`} label="Maladies / Allergies" value={enfantData.maladies} onChange={bindText("maladies")} />
@@ -82,22 +86,36 @@ export default function EnfantForm({ index, enfantData, onChange }: EnfantFormPr
     onChange={(e) => handleFieldChange("sortieSeul", e.target.checked)}
   />
   <label htmlFor={`sortie_seule_${index}`}>
-    Autorise à sortir seul ?
+    Autorisé à sortir seul ?
   </label>
 </div>
 
+
+{coursInfos.length > 0 && (
+  <div className="bg-gray-50 border border-gray-200 rounded p-4 mt-4 space-y-2">
+    <h4 className="font-semibold text-sm text-gray-700">📘 Cours proposés selon l’âge</h4>
+    {coursInfos.map((cours, idx) => (
+      <div key={idx} className="text-sm text-gray-800">
+        <p className="font-medium">{cours.module}</p>
+        <ul className="list-disc ml-4">
+          {cours.horaires.map((h, i) => (
+            <li key={i}>{h}</li>
+          ))}
+        </ul>
+        <p className="text-green-600 font-semibold mt-1">💰 {cours.prix} €</p>
+      </div>
+    ))}
+  </div>
+  )}
       <CoursSelector
         index={index}
         selected={enfantData.cours || []}
         onChange={(value) => handleFieldChange("cours", value)}
         />
-        <div className="text-right font-semibold text-green-700">
+        <div className=" font-semibold text-green-700">
         Prix pour cet enfant : {getMontantCours(enfantData.cours)} €
         </div>
-        <p className="text-sm text-blue-500">
-  💸 Montant calculé : {enfantData.montant} €
-</p>
-
+        
     </div>
     
   )

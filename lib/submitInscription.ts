@@ -10,11 +10,13 @@ export async function submitInscription(data: any) {
     })
 
     if (!response.ok) {
+      console.log("Réponse de n8n :", response)
       throw new Error("Erreur lors de l’envoi à n8n")
+          
+
     }
 
     const result = await response.json()
-    console.log("Réponse de n8n :", result)
     return result
   } catch (err) {
     console.error("Erreur envoi vers n8n :", err)

@@ -41,7 +41,7 @@ export default function InscriptionPage() {
       const enfantsWithUploads = await Promise.all(
         enfants.map(async (enfant, index) => {
           if (enfant.justificatif_file) {
-            const filePath = `justificatifs/enfant_${index}_${enfant.justificatif_file.name}`
+            const filePath = `justificatifs/${parent.pere.nom_prenom}_${enfant.nom}_${index + 1}.pdf`
             const { error } = await supabase.storage
               .from("justificatifs")
               .upload(filePath, enfant.justificatif_file, {

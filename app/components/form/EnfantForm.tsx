@@ -1,12 +1,14 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { getMontantCours } from "../GetMontant"
 import Input from "../ui/Input"
 import Label from "../ui/Label"
 import CoursSelector from "./CourSelector"
 import { Enfant, getCoursInfos } from "../../state/useFormStore"
 import InscriptionCards from "../ui/InscriptionCard"
+import { supabase } from "@/lib/supabase"
+import { UploadCloud } from "lucide-react"
 
 interface EnfantFormProps {
   index: number
@@ -24,6 +26,8 @@ export default function EnfantForm({ index, enfantData, onChange }: EnfantFormPr
 
 const ageInt = parseInt(enfantData.age || "0")
 const coursInfos = getCoursInfos(ageInt)
+
+const [localPreviewUrl, setLocalPreviewUrl] = useState<string | null>(null)
 
   useEffect(() => {
   const montant = getMontantCours(enfantData.cours || [])
@@ -63,7 +67,7 @@ const coursInfos = getCoursInfos(ageInt)
       <Input id={`ecole_${index}`} label="École fréquentée (2025/2026)" value={enfantData.ecole ?? ""} onChange={bindText("ecole")} />
       <Input id={`classe_${index}`} label="Classe" value={enfantData.classe} onChange={bindText("classe")} />
       <Input id={`asso_${index}`} label="Association religieuse fréquentée ?" value={enfantData.asso} onChange={bindText("asso")} />
-      <Input id={`interets_${index}`} label="Centres d’intérêts" value={enfantData.interets} onChange={bindText("nom")} />
+      <Input id={`interets_${index}`} label="Centres d’intérêts" value={enfantData.interets} onChange={bindText("interets")} />
       <Input id={`extrascolaires_${index}`} label="Activités extra-scolaires" value={enfantData.extrascolaires} onChange={bindText("extrascolaires")}/>
       <Input id={`maladies_${index}`} label="Maladies / Allergies" value={enfantData.maladies} onChange={bindText("maladies")} />
       <Input id={`traitements_${index}`} label="Traitements" value={enfantData.traitements} onChange={bindText("traitements")} />
@@ -79,6 +83,7 @@ const coursInfos = getCoursInfos(ageInt)
         />
       </div>
       <div className="flex items-center gap-2">
+        
   <input
     type="checkbox"
     id={`sortie_seule_${index}`}
@@ -89,6 +94,58 @@ const coursInfos = getCoursInfos(ageInt)
     Autorisé à sortir seul ?
   </label>
 </div>
+
+
+
+
+
+<div className="space-y-2 mt-4">
+  <label className="block text-sm font-semibold text-gray-800">
+    📎 Justificatif d’identité ou assurance (PDF ou image)
+  </label>
+
+  <label
+    htmlFor={`justificatif_${index}`}
+    className="flex flex-col items-center justify-center px-4 py-6 border-2 border-dashed border-gray-300 rounded-xl bg-gray-50 text-gray-600 text-center cursor-pointer hover:bg-gray-100 transition"
+  >
+    <UploadCloud size={32} className="mb-2 text-gray-400" />
+    <span className="text-sm font-medium">
+      Cliquez pour choisir un fichier
+    </span>
+    {enfantData.justificatif_file?.name && (
+      <span className="mt-1 text-xs text-gray-500 truncate max-w-full">
+        📄 {enfantData.justificatif_file.name}
+      </span>
+    )}
+  </label>
+
+  <input
+    id={`justificatif_${index}`}
+    type="file"
+    accept="application/pdf,image/*"
+    className="hidden"
+    onChange={(e) => {
+      const file = e.target.files?.[0]
+      if (!file) return
+      handleFieldChange("justificatif_file", file)
+    }}
+  />
+
+  {enfantData.justificatif_url && (
+    <a
+      href={enfantData.justificatif_url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="block mt-2 text-sm text-blue-600 underline"
+    >
+      🔍 Voir le justificatif déjà envoyé
+    </a>
+  )}
+</div>
+
+
+
+
 
 
 {coursInfos.length > 0 && (

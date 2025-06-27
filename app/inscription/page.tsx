@@ -9,8 +9,8 @@ import { getMontantCours } from "../components/GetMontant"
 import { useFormStore } from "../state/useFormStore"
 import FicheAdminForm from "../components/form/FicheAdminForm"
 import ReglementModal from "../components/form/ReglementModal"
-import InscriptionCards from "../components/ui/InscriptionCard"
 import TarifsEtHoraires from "../components/ui/ImageInscription"
+import { supabase } from "@/lib/supabase"
 
 export default function InscriptionPage() {
   const parent = useFormStore((state) => state.parent)
@@ -38,9 +38,32 @@ export default function InscriptionPage() {
     setMessage("")
 
     try {
+      const enfantsWithUploads = await Promise.all(
+        enfants.map(async (enfant, index) => {
+          if (enfant.justificatif_file) {
+            const filePath = `justificatifs/enfant_${index}_${enfant.justificatif_file.name}`
+            const { error } = await supabase.storage
+              .from("justificatifs")
+              .upload(filePath, enfant.justificatif_file, {
+                cacheControl: "3600",
+                upsert: true,
+              })
+            if (error) throw error
+
+            const { data } = supabase.storage.from("justificatifs").getPublicUrl(filePath)
+            return {
+              ...enfant,
+              justificatif_url: data.publicUrl,
+              justificatifFile: undefined,
+            }
+          }
+          return enfant
+        })
+      )
+
       await submitInscription({
         parent,
-        enfants,
+        enfants: enfantsWithUploads,
         montant_total: total,
         ficheAdmin,
         date: new Date().toISOString(),
@@ -111,9 +134,8 @@ export default function InscriptionPage() {
       </button>
 
       {message && <p className="mt-2 text-center">{message}</p>}
-      <TarifsEtHoraires />
 
-  
+      <TarifsEtHoraires />
 
       <ReglementModal
         isOpen={modalOpen}

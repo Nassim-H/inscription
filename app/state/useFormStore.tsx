@@ -52,6 +52,10 @@ export interface Enfant {
   cours: string[]
   montant: number
   sortieSeul: boolean
+  justificatif_url?: string,
+  justificatif_file: File,
+
+
 }
 
 interface FormState {
@@ -85,6 +89,8 @@ const defaultEnfant = (): Enfant => ({
   cours: [],
   montant: 0,
   sortieSeul: false,
+  justificatif_url: "",
+  justificatif_file: new File([], ""),
 })
 
 export const useFormStore = create<FormState>((set) => ({

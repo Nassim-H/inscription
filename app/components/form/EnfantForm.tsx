@@ -101,7 +101,7 @@ const [localPreviewUrl, setLocalPreviewUrl] = useState<string | null>(null)
 
 <div className="space-y-2 mt-4">
   <label className="block text-sm font-semibold text-gray-800">
-    📎 Justificatif d’identité ou assurance (PDF ou image)
+    📎 Assurance de l'enfant (PDF ou image)
   </label>
 
   <label

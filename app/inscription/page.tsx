@@ -11,6 +11,7 @@ import FicheAdminForm from "../components/form/FicheAdminForm"
 import ReglementModal from "../components/form/ReglementModal"
 import TarifsEtHoraires from "../components/ui/ImageInscription"
 import { supabase } from "@/lib/supabase"
+import { submintInscri } from "@/lib/submitInscri"
 
 export default function InscriptionPage() {
   const parent = useFormStore((state) => state.parent)
@@ -22,7 +23,7 @@ export default function InscriptionPage() {
   const setParentField = useFormStore((state) => state.setParentField)
   const setNombreEnfants = useFormStore((state) => state.setNombreEnfants)
   const updateEnfantField = useFormStore((state) => state.updateEnfantField)
-
+  
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState("")
   const [modalOpen, setModalOpen] = useState(false)
@@ -38,32 +39,32 @@ export default function InscriptionPage() {
     setMessage("")
 
     try {
-      const enfantsWithUploads = await Promise.all(
-        enfants.map(async (enfant, index) => {
-          if (enfant.justificatif_file) {
-            const filePath = `justificatifs/assurance_${parent.pere.nom_prenom}_${enfant.nom}_${index + 1}.pdf`
-            const { error } = await supabase.storage
-              .from("justificatifs")
-              .upload(filePath, enfant.justificatif_file, {
-                cacheControl: "3600",
-                upsert: true,
-              })
-            if (error) throw error
+    //   const enfantsWithUploads = await Promise.all(
+    //     enfants.map(async (enfant, index) => {
+    //       if (enfant.justificatif_file) {
+    //         const filePath = `justificatifs/assurance_${parent.pere.nom_prenom}_${enfant.nom}_${index + 1}.pdf`
+    //         const { error } = await supabase.storage
+    //           .from("justificatifs")
+    //           .upload(filePath, enfant.justificatif_file, {
+    //             cacheControl: "3600",
+    //             upsert: true,
+    //           })
+    //         if (error) throw error
 
-            const { data } = supabase.storage.from("justificatifs").getPublicUrl(filePath)
-            return {
-              ...enfant,
-              justificatif_url: data.publicUrl,
-              justificatifFile: undefined,
-            }
-          }
-          return enfant
-        })
-      )
+    //         const { data } = supabase.storage.from("justificatifs").getPublicUrl(filePath)
+    //         return {
+    //           ...enfant,
+    //           justificatif_url: data.publicUrl,
+    //           justificatifFile: undefined,
+    //         }
+    //       }
+    //       return enfant
+    //     })
+    //   )
 
-      await submitInscription({
+      await submintInscri({
         parent,
-        enfants: enfantsWithUploads,
+        enfants,
         montant_total: total,
         ficheAdmin,
         date: new Date().toISOString(),
@@ -125,6 +126,7 @@ export default function InscriptionPage() {
         </div>
       </div>
 
+
       <button
         onClick={handleSubmit}
         disabled={loading || !reglementLu}
@@ -134,8 +136,6 @@ export default function InscriptionPage() {
       </button>
 
       {message && <p className="mt-2 text-center">{message}</p>}
-
-      <TarifsEtHoraires />
 
       <ReglementModal
         isOpen={modalOpen}

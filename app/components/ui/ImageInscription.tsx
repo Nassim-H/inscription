@@ -17,7 +17,7 @@ export default function TarifsEtHoraires() {
         </p>
       </div>
 
-      {/* Tu peux ensuite mettre ici les <InscriptionCards /> */}
+      {/* Tu peux ensuite mettre ici les <   /> */}
     </div>
   )
 }

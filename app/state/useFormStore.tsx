@@ -3,7 +3,8 @@ import { create } from "zustand"
 export type ParentRole = "pere" | "mere"
 
 export interface ParentInfo {
-  nom_prenom: string
+  nom: string
+  prenom: string
   telephone: string
   email: string
   profession: string
@@ -32,6 +33,8 @@ interface FicheAdmin {
   autorisationPhotoInterne: boolean
   autorisationPhotoReseaux: boolean
   autorisationPhotoVisageApparent: boolean
+  modePaiement:  "Espèces" | "Virement" | "Autre"
+  preuveVirement?: File
 }
 
 export interface Enfant {
@@ -96,7 +99,8 @@ const defaultEnfant = (): Enfant => ({
 export const useFormStore = create<FormState>((set) => ({
   parent: {
     pere: {
-      nom_prenom: "",
+      nom: "",
+      prenom: "",
       telephone: "",
       email: "",
       profession: "",
@@ -106,7 +110,8 @@ export const useFormStore = create<FormState>((set) => ({
       ville: ""
     },
     mere: {
-      nom_prenom: "",
+      nom: "",
+      prenom: "",
       telephone: "",
       email: "",
       profession: "",
@@ -133,7 +138,8 @@ export const useFormStore = create<FormState>((set) => ({
     autorisationTransport: false,
     autorisationPhotoInterne: false,
     autorisationPhotoReseaux: false,
-    autorisationPhotoVisageApparent: false
+    autorisationPhotoVisageApparent: false,
+    modePaiement: "Espèces"
   },
 
   // Mutateurs

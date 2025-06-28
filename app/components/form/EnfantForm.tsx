@@ -9,6 +9,8 @@ import { Enfant, getCoursInfos } from "../../state/useFormStore"
 import InscriptionCards from "../ui/InscriptionCard"
 import { supabase } from "@/lib/supabase"
 import { UploadCloud } from "lucide-react"
+import RadioGroup from "../ui/RadioGroupe"
+import FormSection from "./FormSection"
 
 interface EnfantFormProps {
   index: number
@@ -40,37 +42,49 @@ const [localPreviewUrl, setLocalPreviewUrl] = useState<string | null>(null)
 
 
   return (
+    <FormSection title={`Informations de l'enfant ${index + 1}`}>
+    
     <div className="space-y-4 border p-4 rounded-xl mb-6">
       <h3 className="text-lg font-semibold">Enfant {index + 1}</h3>
-
-      <Input id={`nom_${index}`} label="Nom" value={enfantData.nom} onChange={bindText("nom")} required />
-      <Input id={`prenom_${index}`} label="Prénom" value={enfantData.prenom} onChange={bindText("prenom")} required />
+      <Input id={`nom_${index}`} label="Nom" placeholder="Ex : Hassain" value={enfantData.nom} onChange={bindText("nom")} required />
+      <Input id={`prenom_${index}`} label="Prénom" placeholder="Ex : Nassim" value={enfantData.prenom} onChange={bindText("prenom")} required />
 
       <div>
-        <Label htmlFor={`genre_${index}`}>Fille / Garçon</Label>
-        <select
-          id={`genre_${index}`}
-          value={enfantData.genre}
-          onChange={(e) => handleFieldChange("genre", e.target.value)}
-          required
-          className="w-full border rounded p-2"
-        >
-          <option value="">-- Sélectionner --</option>
-          <option value="Fille">Fille</option>
-          <option value="Garçon">Garçon</option>
-        </select>
+       <RadioGroup
+        id={`genre_${index}`}
+        label="Genre"
+        value={enfantData.genre ?? ""}
+        onChange={(val) => handleFieldChange("genre", val)}
+        options={[
+          { label: "Fille", value: "Fille" },
+          { label: "Garçon", value: "Garçon" },
+        ]}
+      />
+
       </div>
 
-      <Input id={`age_${index}`} label="Âge" type="number" value={enfantData.age ?? ""} onChange={bindText("age")} required className="w-24" />
-      <Input id={`date_naissance_${index}`} label="Date de naissance" type="date" value={enfantData.date_naissance ?? ""} onChange={bindText("date_naissance")} />
-      <Input id={`lieu_naissance_${index}`} label="Lieu de naissance" value={enfantData.lieu_naissance ?? ""} onChange={bindText("lieu_naissance")} />
-      <Input id={`ecole_${index}`} label="École fréquentée (2025/2026)" value={enfantData.ecole ?? ""} onChange={bindText("ecole")} />
-      <Input id={`classe_${index}`} label="Classe" value={enfantData.classe} onChange={bindText("classe")} />
-      <Input id={`asso_${index}`} label="Association religieuse fréquentée ?" value={enfantData.asso} onChange={bindText("asso")} />
-      <Input id={`interets_${index}`} label="Centres d’intérêts" value={enfantData.interets} onChange={bindText("interets")} />
-      <Input id={`extrascolaires_${index}`} label="Activités extra-scolaires" value={enfantData.extrascolaires} onChange={bindText("extrascolaires")}/>
-      <Input id={`maladies_${index}`} label="Maladies / Allergies" value={enfantData.maladies} onChange={bindText("maladies")} />
-      <Input id={`traitements_${index}`} label="Traitements" value={enfantData.traitements} onChange={bindText("traitements")} />
+      <Input
+        id={`age_${index}`}
+        label="Âge"
+        type="number"
+        placeholder="1 - 18 ans"
+        value={enfantData.age ?? ""}
+        onChange={bindText("age")}
+        required
+        min={1}
+        max={18}
+        step={1}
+        className="w-full sm:w-32"
+      />
+      <Input id={`date_naissance_${index}`} label="Date de naissance"  type="date" value={enfantData.date_naissance ?? ""} onChange={bindText("date_naissance")} />
+      <Input id={`lieu_naissance_${index}`} label="Lieu de naissance" placeholder="Ex : Béthune" value={enfantData.lieu_naissance ?? ""} onChange={bindText("lieu_naissance")} />
+      <Input id={`ecole_${index}`} label="École fréquentée (2025/2026)" placeholder="Ex : Collège Jean-Moulin" value={enfantData.ecole ?? ""} onChange={bindText("ecole")} />
+      <Input id={`classe_${index}`} label="Classe" placeholder="Ex : 6ème" value={enfantData.classe} onChange={bindText("classe")} />
+      <Input id={`asso_${index}`} label="Association religieuse fréquentée ?" placeholder="Ex : Oui, mosquée de Abou Bakr Essedik à Roubaix" value={enfantData.asso} onChange={bindText("asso")} />
+      <Input id={`interets_${index}`} label="Centres d’intérêts" value={enfantData.interets} placeholder="Ex : Sport" onChange={bindText("interets")} />
+      <Input id={`extrascolaires_${index}`} label="Activités extra-scolaires"  placeholder="Ex : Club de foot" value={enfantData.extrascolaires} onChange={bindText("extrascolaires")}/>
+      <Input id={`maladies_${index}`} label="Maladies / Allergies" value={enfantData.maladies} placeholder="Ex : Allergies aux acariens" onChange={bindText("maladies")} />
+      <Input id={`traitements_${index}`} label="Traitements" value={enfantData.traitements} placeholder="Ex : Asthme" onChange={bindText("traitements")} />
 
       <div>
         <Label htmlFor={`observations_${index}`}>Observations à préciser (handicap, accompagnement…)</Label>
@@ -78,6 +92,7 @@ const [localPreviewUrl, setLocalPreviewUrl] = useState<string | null>(null)
           id={`observations_${index}`}
           value={enfantData.observations}
           onChange={(e) => handleFieldChange("observations", e.target.value)}
+          placeholder="Ex : Handicap moteur léger"
           className="w-full border rounded p-2"
           rows={3}
         />
@@ -167,13 +182,14 @@ const [localPreviewUrl, setLocalPreviewUrl] = useState<string | null>(null)
       <CoursSelector
         index={index}
         selected={enfantData.cours || []}
-        onChange={(value) => handleFieldChange("cours", value)}
+        onChange={(value: any) => handleFieldChange("cours", value)}
         />
         <div className=" font-semibold text-green-700">
         Prix pour cet enfant : {getMontantCours(enfantData.cours)} €
         </div>
         
     </div>
+  </FormSection>
     
   )
 }

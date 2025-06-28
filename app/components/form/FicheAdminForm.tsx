@@ -5,6 +5,9 @@ import Input from "../ui/Input"
 import Label from "../ui/Label"
 import { useState } from "react"
 import { UploadCloud } from "lucide-react"
+import Select from "../ui/Select"
+import { CheckboxItem } from "../ui/Checkbox"
+import FormSection from "./FormSection"
 
 export default function FicheAdminForm() {
   const ficheAdmin = useFormStore((state) => state.ficheAdmin)
@@ -14,25 +17,27 @@ export default function FicheAdminForm() {
 
   const [preuveVirement, setPreuveVirement] = useState<File | null>(null)
 
+  const situationOptions = [
+  { label: "Mariés", value: "maries" },
+  { label: "Divorcés", value: "divorces" },
+  { label: "Veuf(ve)", value: "veuf" },
+  { label: "Célibataire", value: "celibataire" },
+]
+
   return (
-    <div className="space-y-6 border p-6 rounded-xl">
-      <h2 className="text-xl font-bold">Fiche complémentaire (Administration)</h2>
+    <FormSection title="Fiche complémentaire (Administration)">
+    <div className="space-y-6 p-6 rounded-xl">
 
       {/* Situation familiale */}
       <div className="space-y-2">
         <Label htmlFor="situation">Situation familiale</Label>
-        <select
+        <Select
           id="situation"
           value={ficheAdmin.situationFamiliale}
           onChange={(e) => setField("situationFamiliale", e.target.value)}
-          className="w-full border p-2 rounded"
-        >
-          <option value="">-- Choisir --</option>
-          <option value="maries">Mariés</option>
-          <option value="divorces">Divorcés</option>
-          <option value="veuf">Veuf(ve)</option>
-          <option value="celibataire">Célibataire</option>
-        </select>
+          className="w-full border p-2 rounded" options={ situationOptions}        >
+          
+        </Select>
       </div>
 
       {/* Personne à prévenir */}
@@ -92,42 +97,41 @@ export default function FicheAdminForm() {
       </div>
 
       {/* Autorisations */}
-      <div className="space-y-2">
-        <h3 className="font-semibold">Autorisations parentales</h3>
-        {[
-          { key: "autorisationSecours", label: "Contacter les secours en cas d’accident" },
-          { key: "autorisationSoins", label: "Prise de décision de soins / hospitalisation" },
-          { key: "autorisationSortieSeule", label: "Sortie seule de l’établissement" },
-          { key: "autorisationTransport", label: "Transport par les bénévoles" },
-          { key: "autorisationPhotoInterne", label: "Photo usage interne" },
-          { key: "autorisationPhotoReseaux", label: "Publication photo sur réseaux" },
-          { key: "autorisationPhotoVisageApparent", label: "Visage apparent sur les photos" },
-        ].map(({ key, label }) => (
-          <div key={key} className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              id={key}
-              checked={ficheAdmin[key as keyof typeof ficheAdmin] as boolean}
-              onChange={(e) => setField(key as keyof typeof ficheAdmin, e.target.checked)}
-            />
-            <label htmlFor={key} className="text-sm">{label}</label>
-          </div>
-        ))}
-      </div>
+      <div className="space-y-4">
+      <h3 className="font-semibold text-gray-800">Autorisations parentales</h3>
+      {[
+        { key: "autorisationSecours", label: "Contacter les secours en cas d’accident" },
+        { key: "autorisationSoins", label: "Prise de décision de soins / hospitalisation" },
+        { key: "autorisationSortieSeule", label: "Sortie seule de l’établissement" },
+        { key: "autorisationTransport", label: "Transport par les bénévoles" },
+        { key: "autorisationPhotoInterne", label: "Photo usage interne" },
+        { key: "autorisationPhotoReseaux", label: "Publication photo sur réseaux" },
+        { key: "autorisationPhotoVisageApparent", label: "Visage apparent sur les photos" },
+      ].map(({ key, label }) => (
+        <CheckboxItem
+          key={key}
+          id={key}
+          label={label}
+          checked={ficheAdmin[key as keyof typeof ficheAdmin] as boolean}
+          onChange={(checked) => setField(key as keyof typeof ficheAdmin, checked)}
+        />
+      ))}
+    </div>
 
       {/* Mode de paiement */}
       <div className="space-y-2">
-        <label className="font-semibold text-sm">💳 Mode de paiement</label>
-        <select
+        <Select
+          id="modePaiement"
+          label="💳 Mode de paiement"
           value={ficheAdmin.modePaiement || ""}
           onChange={(e) => setField("modePaiement", e.target.value)}
-          className="w-full border p-2 rounded"
           required
-        >
-          <option value="">-- Sélectionner --</option>
-          <option value="Espèces">Espèces chez Faraj</option>
-          <option value="Virement">Virement bancaire</option>
-        </select>
+          options={[
+            { label: "Espèces chez Faraj", value: "Espèces" },
+            { label: "Virement bancaire", value: "Virement" }
+          ]}
+        />
+
       </div>
 
       {/* Affichage dynamique selon mode de paiement */}
@@ -174,5 +178,6 @@ export default function FicheAdminForm() {
   </div>
       )}
     </div>
+    </FormSection>
   )
 }

@@ -20,7 +20,7 @@ interface PersonneAutorisee {
   lien: string
 }
 
-interface FicheAdmin {
+export interface FicheAdmin {
   situationFamiliale: string
   urgenceNom: string
   urgenceTel: string

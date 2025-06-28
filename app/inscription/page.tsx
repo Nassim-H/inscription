@@ -1,7 +1,6 @@
 "use client"
 
-import { useState } from "react"
-import { submitInscription } from "@/lib/submitInscription"
+import { useMemo, useState } from "react"
 import ChildSelector from "../components/form/ChildSelector"
 import EnfantForm from "../components/form/EnfantForm"
 import ParentSection from "../components/form/ParentSection"
@@ -9,9 +8,10 @@ import { getMontantCours } from "../components/GetMontant"
 import { useFormStore } from "../state/useFormStore"
 import FicheAdminForm from "../components/form/FicheAdminForm"
 import ReglementModal from "../components/form/ReglementModal"
-import TarifsEtHoraires from "../components/ui/ImageInscription"
-import { supabase } from "@/lib/supabase"
+
 import { submintInscri } from "@/lib/submitInscri"
+import ProgressBarForm from "../components/ui/ProgressBarForm"
+import { getFormStepProgress } from "@/lib/getFormStep"
 
 export default function InscriptionPage() {
   const parent = useFormStore((state) => state.parent)
@@ -79,8 +79,29 @@ export default function InscriptionPage() {
     }
   }
 
+
+const { currentStep, totalSteps } = getFormStepProgress({
+  parent,
+  enfants,
+  ficheAdmin,
+  reglementLu
+})
+
+
   return (
-    <div className="max-w-4xl mx-auto p-8 space-y-8">
+    <div className="max-w-4xl mx-auto p-8 space-y-8 sticky">
+      <ProgressBarForm
+        currentStep={currentStep}
+        totalSteps={totalSteps}
+        labels={[
+          "Parent",
+          ...enfants.map((_, i) => `Enfant ${i + 1}`),
+          "Fiche admin",
+          "Règlement",
+        ]}
+        
+      />
+
       <ParentSection parentData={parent} onChange={setParentField} />
       <ChildSelector value={enfants.length} onChange={setNombreEnfants} />
 

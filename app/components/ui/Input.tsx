@@ -17,7 +17,7 @@ export default function Input({
   ...props
 }: InputProps) {
   return (
-    <div className="space-y-1 w-full">
+<div className="w-full py-4">
       {label && (
         <label htmlFor={id} className="block text-sm font-medium text-gray-800">
           {label}{required && <span className="text-red-500 ml-0.5">*</span>}

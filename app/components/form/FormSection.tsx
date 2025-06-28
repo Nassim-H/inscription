@@ -19,7 +19,7 @@ export default function FormSection({ title, children, defaultOpen = true }: For
         onClick={() => setOpen(!open)}
         className="w-full flex items-center justify-between text-left py-2"
       >
-        <h3 className="text-base sm:text-lg font-semibold text-gray-800">{title}</h3>
+        <h3 className="text-lg sm:text-xl font-bold text-gray-800">{title}</h3>
         <ChevronDown
           className={`h-5 w-5 text-gray-500 transition-transform duration-200 ${open ? "rotate-180" : "rotate-0"}`}
         />

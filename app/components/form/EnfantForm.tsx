@@ -44,7 +44,7 @@ const [localPreviewUrl, setLocalPreviewUrl] = useState<string | null>(null)
   return (
     <FormSection title={`Informations de l'enfant ${index + 1}`}>
     
-    <div className="space-y-4 border p-4 rounded-xl mb-6">
+    <div className="space-y-4 border p-4 rounded-xl mb-6 ">
       <h3 className="text-lg font-semibold">Enfant {index + 1}</h3>
       <Input id={`nom_${index}`} label="Nom" placeholder="Ex : Hassain" value={enfantData.nom} onChange={bindText("nom")} required />
       <Input id={`prenom_${index}`} label="Prénom" placeholder="Ex : Nassim" value={enfantData.prenom} onChange={bindText("prenom")} required />

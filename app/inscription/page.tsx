@@ -89,80 +89,103 @@ const { currentStep, totalSteps } = getFormStepProgress({
 
 
   return (
-    <div className="max-w-4xl mx-auto p-8 space-y-8 sticky">
-      <ProgressBarForm
-        currentStep={currentStep}
-        totalSteps={totalSteps}
-        labels={[
-          "Parent",
-          ...enfants.map((_, i) => `Enfant ${i + 1}`),
-          "Fiche admin",
-          "Règlement",
-        ]}
-        
+<div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-10 space-y-10">
+
+  
+
+      <div className="max-w-4xl mx-auto p-8 space-y-8 sticky">
+  {/* Barre de progression sticky */}
+  <ProgressBarForm
+    currentStep={currentStep}
+    totalSteps={totalSteps}
+    labels={[
+      "Parent",
+      ...enfants.map((_, i) => `Enfant ${i + 1}`),
+      "Fiche admin",
+      "Règlement",
+    ]}
+  />
+<div className="max-w-4xl mx-auto px-4 pt-4">
+  <div className="flex items-center justify-start mb-6">
+    <img src="/logoamab.png" alt="Logo association" className="h-16 w-auto" />
+  </div>
+</div>
+  {/* ➤ Section parent */}
+    <ParentSection parentData={parent} onChange={setParentField} />
+
+  {/* ➤ Sélecteur */}
+  <div className="border-t pt-6 mt-6">
+    <ChildSelector value={enfants.length} onChange={setNombreEnfants} />
+  </div>
+
+  {/* ➤ Enfants dynamiques */}
+  {enfants.map((enfant, index) => (
+    <div key={index} className="border-t pt-6 mt-6">
+      <EnfantForm
+        index={index}
+        enfantData={enfant}
+        onChange={updateEnfantField}
       />
+    </div>
+  ))}
 
-      <ParentSection parentData={parent} onChange={setParentField} />
-      <ChildSelector value={enfants.length} onChange={setNombreEnfants} />
+  {/* ➤ Total */}
+  <div className="text-right text-xl font-bold text-green-700 border-t pt-6 mt-6">
+    Total à payer : {total} €
+  </div>
 
-      {enfants.map((enfant, index) => (
-        <EnfantForm
-          key={index}
-          index={index}
-          enfantData={enfant}
-          onChange={updateEnfantField}
-        />
-      ))}
+  {/* ➤ Fiche admin */}
+  <div className="border-t pt-6 mt-6">
+    <FicheAdminForm />
+  </div>
 
-      <div className="text-right text-xl font-bold text-green-700">
-        Total à payer : {total} €
-      </div>
+  {/* ➤ Règlement */}
+  <div className="border-t pt-6 mt-6">
+    <h3 className="text-lg font-bold mb-2"> Règlement intérieur</h3>
+    <p className="text-sm mb-4">
+      Veuillez lire attentivement le règlement intérieur avant de soumettre votre inscription. Il est important de comprendre les règles et conditions d'inscription.
+    </p>
 
-      <FicheAdminForm />
+    <button
+      onClick={() => setModalOpen(true)}
+      className="text-blue-600 underline text-sm mb-2"
+    >
+      Lire le règlement
+    </button>
 
-      <div className="border-t pt-6 mt-6">
-        <h3 className="text-lg font-bold mb-2"> Règlement intérieur</h3>
-        <p className="text-sm mb-4">
-          Veuillez lire attentivement le règlement intérieur avant de soumettre votre inscription. Il est important de comprendre les règles et conditions d'inscription.
-        </p>
-
-        <button
-          onClick={() => setModalOpen(true)}
-          className="text-blue-600 underline text-sm mb-2"
-        >
-          Lire le règlement
-        </button>
-
-        <div className="flex items-center gap-2">
-          <input
-            type="checkbox"
-            id="reglementLu"
-            checked={reglementLu}
-            onChange={(e) => setReglementLu(e.target.checked)}
-            disabled={!scrollOk}
-          />
-          <label htmlFor="reglementLu" className="text-sm">
-            J’ai lu et j’accepte le règlement intérieur <strong>(« lu et approuvé »)</strong>
-          </label>
-        </div>
-      </div>
-
-
-      <button
-        onClick={handleSubmit}
-        disabled={loading || !reglementLu}
-        className="bg-blue-600 text-white px-4 py-2 rounded shadow disabled:opacity-50"
-      >
-        {loading ? "Envoi en cours..." : "Envoyer l'inscription"}
-      </button>
-
-      {message && <p className="mt-2 text-center">{message}</p>}
-
-      <ReglementModal
-        isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
-        onAcceptScroll={() => setScrollOk(true)}
+    <div className="flex items-center gap-2">
+      <input
+        type="checkbox"
+        id="reglementLu"
+        checked={reglementLu}
+        onChange={(e) => setReglementLu(e.target.checked)}
+        disabled={!scrollOk}
       />
+      <label htmlFor="reglementLu" className="text-sm">
+        J’ai lu et j’accepte le règlement intérieur <strong>(« lu et approuvé »)</strong>
+      </label>
+    </div>
+  </div>
+
+  {/* ➤ Bouton final */}
+  <div className="border-t pt-6 mt-6 space-y-4">
+    <button
+      onClick={handleSubmit}
+      disabled={loading || !reglementLu}
+              className="bg-green-800 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded-xl shadow disabled:opacity-50 w-full sm:w-auto"
+    >
+      {loading ? "Envoi en cours..." : "Envoyer l'inscription"}
+    </button>
+
+    {message && <p className="text-center text-sm">{message}</p>}
+  </div>
+
+  <ReglementModal
+    isOpen={modalOpen}
+    onClose={() => setModalOpen(false)}
+    onAcceptScroll={() => setScrollOk(true)}
+  />
+</div>
     </div>
   )
 }

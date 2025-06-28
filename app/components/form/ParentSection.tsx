@@ -33,7 +33,7 @@ export default function ParentSection({ parentData, onChange }: Props) {
 
       {/* Père */}
       <FormSection title="Informations du père">
-      <div className="space-y-4">
+      <div className="space-y-6 px-2">
         <h3 className="text-lg font-semibold">Père</h3>
 
         <Input id="pere_nom" label="Nom" value={parentData.pere.nom ?? ""} placeholder="Ex : Hassain" onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleFieldChange("pere", "nom", e.target.value.toUpperCase())} />
@@ -43,7 +43,7 @@ export default function ParentSection({ parentData, onChange }: Props) {
         <Input id="pere_email" label="Adresse mail" type="email" value={parentData.pere.email ?? ""} placeholder="Ex : email@gmail.com" onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleFieldChange("pere", "email", e.target.value)} />
         <Input id="pere_profession" label="Profession" value={parentData.pere.profession ?? ""} placeholder="Ex : Serrurier" onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleFieldChange("pere", "profession", e.target.value)} />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 ">
           <Input id="pere_num_rue" label="N° rue" value={parentData.pere.numero_rue ?? ""} placeholder="Ex : 12" onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleFieldChange("pere", "numero_rue", e.target.value)} />
           <Input id="pere_nom_rue" label="Nom de rue" value={parentData.pere.nom_rue ?? ""} placeholder="Ex : Rue des Martyrs" onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleFieldChange("pere", "nom_rue", e.target.value)} />
           <Input id="pere_code_postal" label="Code postal" value={parentData.pere.code_postal ?? ""} placeholder="Ex : 62700" onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleFieldChange("pere", "code_postal", e.target.value)} />
@@ -75,7 +75,7 @@ export default function ParentSection({ parentData, onChange }: Props) {
         </div>
 
         {adresseDifferente && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 ">
             <Input
               id="mere_num_rue"
               label="N° rue"

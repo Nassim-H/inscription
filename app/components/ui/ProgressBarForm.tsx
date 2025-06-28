@@ -5,7 +5,7 @@ interface ProgressBarFormProps {
 }
 
 export default function ProgressBarForm({ currentStep, totalSteps, labels = [] }: ProgressBarFormProps) {
-  const percentage = Math.round((currentStep / totalSteps) * 100)
+  const percentage = Math.round((currentStep / totalSteps) * 100 )
 
   return (
     <div className="sticky top-0 z-40 bg-white border-b border-gray-200">
@@ -25,7 +25,7 @@ export default function ProgressBarForm({ currentStep, totalSteps, labels = [] }
 
         <div className="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
           <div
-            className="bg-blue-600 h-full transition-all duration-300"
+            className="bg-green-800 h-full transition-all duration-300"
             style={{ width: `${percentage}%` }}
           />
         </div>

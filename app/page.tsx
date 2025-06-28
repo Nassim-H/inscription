@@ -1,39 +1,32 @@
 "use client"
 
-import ChildSelector from "./components/form/ChildSelector"
-import EnfantForm from "./components/form/EnfantForm"
-import ParentSection from "./components/form/ParentSection"
-import { useFormStore } from "./state/useFormStore"
-
-
-export default function InscriptionPage() {
-  const parent = useFormStore((state) => state.parent)
-  const enfants = useFormStore((state) => state.enfants)
-
-  const setParentField = useFormStore((state) => state.setParentField)
-  const setNombreEnfants = useFormStore((state) => state.setNombreEnfants)
-  const updateEnfantField = useFormStore((state) => state.updateEnfantField)
-
+export default function HomePage() {
   return (
-    <div className="max-w-4xl mx-auto p-8 space-y-8">
-      <ParentSection parentData={parent} onChange={setParentField} />
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 px-6 text-center">
+      {/* Logo */}
+      <img src="/logoamab.png" alt="Logo de l'association" className="h-20 mb-6" />
 
-      <ChildSelector value={enfants.length} onChange={setNombreEnfants} />
+      {/* Titre */}
+      <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-4">
+        Bienvenue sur le site d’inscription 2025-2026
+      </h1>
 
-      {enfants.map((enfant, index) => (
-        <EnfantForm
-          key={index}
-          index={index}
-          enfantData={enfant}
-          onChange={updateEnfantField}
-        />
-      ))}
+      {/* Description */}
+      <p className="text-sm sm:text-base text-gray-600 max-w-xl mb-6">
+        Ce site permet aux parents d’inscrire leurs enfants aux activités éducatives et religieuses de notre association.
+      </p>
 
-      <div className="bg-gray-100 p-4 rounded-lg shadow mt-6">
-        <h2 className="text-lg font-semibold">📦 Debug (State actuel)</h2>
-        <pre className="text-xs bg-white p-2 rounded overflow-x-auto">
-          {JSON.stringify({ parent, enfants }, null, 2)}
-        </pre>
+      {/* Bouton vers l’inscription */}
+      <a
+        href="/inscription"
+        className="bg-green-800 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded-xl shadow"
+      >
+        Accéder au formulaire
+      </a>
+
+      {/* Footer */}
+      <div className="mt-12 text-xs text-gray-400">
+        © {new Date().getFullYear()} – Association éducative & religieuse
       </div>
     </div>
   )

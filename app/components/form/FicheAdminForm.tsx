@@ -120,24 +120,36 @@ export default function FicheAdminForm() {
 
       {/* Mode de paiement */}
       <div className="space-y-2">
-        <Select
-          id="modePaiement"
-          label="💳 Mode de paiement"
-          value={ficheAdmin.modePaiement || ""}
-          onChange={(e) => setField("modePaiement", e.target.value)}
-          required
-          options={[
-            { label: "Espèces chez Faraj", value: "Espèces" },
-            { label: "Virement bancaire", value: "Virement" }
-          ]}
+
+<div className="space-y-2">
+  <Label htmlFor="modePaiement">Mode de paiement</Label>
+  <div className="flex flex-col gap-2">
+    {[
+      { label: "Espèces chez Faraj", value: "Espèces" },
+      { label: "Virement bancaire", value: "Virement" },
+    ].map(({ label, value }) => (
+      <label key={value} className="flex items-center gap-2 text-sm">
+        <input
+          type="radio"
+          name="modePaiement"
+          value={value}
+          checked={ficheAdmin.modePaiement === value}
+          onChange={() => setField("modePaiement", value)}
+          className="accent-blue-600"
         />
+        {label}
+      </label>
+    ))}
+  </div>
+</div>
+
 
       </div>
 
       {/* Affichage dynamique selon mode de paiement */}
       {ficheAdmin.modePaiement === "Espèces" && (
         <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded">
-          💬 Merci de vous présenter auprès de <strong>Faraj</strong> pour régler en espèces.
+          💬 Merci de vous présenter auprès de <strong>Farag</strong> pour régler en espèces.
         </div>
       )}
 

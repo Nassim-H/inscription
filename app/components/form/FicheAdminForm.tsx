@@ -7,6 +7,7 @@ import { UploadCloud } from "lucide-react"
 import Select from "../ui/Select"
 import { CheckboxItem } from "../ui/Checkbox"
 import FormSection from "./FormSection"
+import { useState } from "react"
 
 export default function FicheAdminForm() {
   const ficheAdmin = useFormStore((state) => state.ficheAdmin)
@@ -20,6 +21,14 @@ export default function FicheAdminForm() {
   { label: "Veuf(ve)", value: "veuf" },
   { label: "Célibataire", value: "celibataire" },
 ]
+const [copied, setCopied] = useState(false)
+  const iban = "FR7610278026190002041170192"
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(iban)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
 
   return (
     <FormSection title="Fiche complémentaire (Administration)">
@@ -156,11 +165,24 @@ export default function FicheAdminForm() {
       )}
 
       {ficheAdmin.modePaiement === "Virement" && (
-  <div className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 rounded space-y-4">
-<p>
-  🏦 Merci d’effectuer le virement sur le compte indiqué :<br />
-  <strong className="user-select: all;">FR7610278026190002041170192</strong>
-</p>
+<div className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 rounded space-y-4">
+        
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+          <div className="text-sm">
+            <p className="mb-1">🏦 Merci d’effectuer le virement sur le compte indiqué :</p>
+            <div className="font-mono px-2 py-1 rounded border select-all text-sm break-all">
+              {iban}
+            </div>
+          </div>
+
+          <button
+            onClick={handleCopy}
+            className="bg-blue-600 text-white px-4 py-1.5 rounded text-sm hover:bg-blue-700 w-full md:w-auto"
+          >
+            {copied ? "✔️ Copié" : "📋 Copier"}
+          </button>
+        </div>
+
 
     <div>
       <label

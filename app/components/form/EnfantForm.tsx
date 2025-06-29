@@ -29,7 +29,6 @@ export default function EnfantForm({ index, enfantData, onChange }: EnfantFormPr
 const ageInt = parseInt(enfantData.age || "0")
 const coursInfos = getCoursInfos(ageInt)
 
-const [localPreviewUrl, setLocalPreviewUrl] = useState<string | null>(null)
 
   useEffect(() => {
   const montant = getMontantCours(enfantData.cours || [])
@@ -46,8 +45,8 @@ const [localPreviewUrl, setLocalPreviewUrl] = useState<string | null>(null)
     
     <div className="space-y-4 border p-4 rounded-xl mb-6 ">
       <h3 className="text-lg font-semibold">Enfant {index + 1}</h3>
-      <Input id={`nom_${index}`} label="Nom" placeholder="Ex : Hassain" value={enfantData.nom} onChange={bindText("nom")} required />
-      <Input id={`prenom_${index}`} label="Prénom" placeholder="Ex : Nassim" value={enfantData.prenom} onChange={bindText("prenom")} required />
+      <Input id={`nom_${index}`} label="Nom" placeholder="Ex : Mifta" value={enfantData.nom} onChange={bindText("nom")} required />
+      <Input id={`prenom_${index}`} label="Prénom" placeholder="Ex : Anis" value={enfantData.prenom} onChange={bindText("prenom")} required />
 
       <div>
        <RadioGroup
@@ -120,7 +119,7 @@ const [localPreviewUrl, setLocalPreviewUrl] = useState<string | null>(null)
   </label>
 
   <label
-    htmlFor={`justificatif_${index}`}
+    htmlFor={`assurance_${enfantData.nom}_${enfantData.prenom}`}
     className="flex flex-col items-center justify-center px-4 py-6 border-2 border-dashed border-gray-300 rounded-xl bg-gray-50 text-gray-600 text-center cursor-pointer hover:bg-gray-100 transition"
   >
     <UploadCloud size={32} className="mb-2 text-gray-400" />
@@ -135,7 +134,7 @@ const [localPreviewUrl, setLocalPreviewUrl] = useState<string | null>(null)
   </label>
 
   <input
-    id={`justificatif_${index}`}
+    id={`assurance_${enfantData.nom}_${enfantData.prenom}`}
     type="file"
     accept="application/pdf,image/*"
     className="hidden"

@@ -20,14 +20,14 @@ if (
   data.enfants.forEach((enfant: any, i: number) => {
     const enfantSansFichier = { ...enfant }
     if (enfant.justificatif_file) {
-      formData.append(`justificatif_${i}`, enfant.justificatif_file)
+      formData.append(`assurance_${enfant.nom}_${enfant.prenom}`, enfant.justificatif_file)
       delete enfantSansFichier.justificatif_file
     }
     formData.append(`enfant_${i}`, JSON.stringify(enfantSansFichier))
   })
 
   try {
-    const response = await fetch("https://n8n.srv770157.hstgr.cloud/webhook-test/0ef091e6-a0c7-457c-a8a2-3e8ff85dead0", {
+    const response = await fetch("https://n8n.srv770157.hstgr.cloud/webhook/0ef091e6-a0c7-457c-a8a2-3e8ff85dead0", {
       method: "POST",
       body: formData, // ✅ plus de headers à définir ici
     })

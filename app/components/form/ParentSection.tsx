@@ -36,8 +36,8 @@ export default function ParentSection({ parentData, onChange }: Props) {
       <div className="space-y-6 px-2">
         <h3 className="text-lg font-semibold">Père</h3>
 
-        <Input id="pere_nom" label="Nom" value={parentData.pere.nom ?? ""} placeholder="Ex : Hassain" onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleFieldChange("pere", "nom", e.target.value.toUpperCase())} />
-        <Input id="pere_prenom" label="Prénom" value={parentData.pere.prenom ?? ""} placeholder="Ex : Nasserdine" onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleFieldChange("pere", "prenom", e.target.value)} />
+        <Input id="pere_nom" label="Nom" value={parentData.pere.nom ?? ""} placeholder="Ex : Mifta" onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleFieldChange("pere", "nom", e.target.value.toUpperCase())} />
+        <Input id="pere_prenom" label="Prénom" value={parentData.pere.prenom ?? ""} placeholder="Ex : Malik" onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleFieldChange("pere", "prenom", e.target.value)} />
 
         <Input id="pere_tel" label="Téléphone" type="tel" value={parentData.pere.telephone ?? ""} placeholder="Ex : 07 82 52 62 52" onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleFieldChange("pere", "telephone", e.target.value)} />
         <Input id="pere_email" label="Adresse mail" type="email" value={parentData.pere.email ?? ""} placeholder="Ex : email@gmail.com" onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleFieldChange("pere", "email", e.target.value)} />
@@ -54,10 +54,10 @@ export default function ParentSection({ parentData, onChange }: Props) {
 
       {/* Mère */}
             <FormSection title="Informations de la mère">
-      <div className="space-y-4">
+      <div className="space-y-6 px-2">
         <h3 className="text-lg font-semibold">Mère</h3>
 
-        <Input id="mere_nom_" label="Nom" value={parentData.mere.nom} placeholder="Ex : Hassain" onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleFieldChange("mere", "nom", e.target.value.toUpperCase())} />
+        <Input id="mere_nom_" label="Nom" value={parentData.mere.nom} placeholder="Ex : Mifta" onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleFieldChange("mere", "nom", e.target.value.toUpperCase())} />
         <Input id="mere_prenom" label="Prénom" value={parentData.mere.prenom} placeholder="Ex : Valérie" onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleFieldChange("mere", "prenom", e.target.value)} />
         <Input id="mere_tel" label="Téléphone" type="tel" value={parentData.mere.telephone}  placeholder="Ex : 06 23 27 54 87" onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleFieldChange("mere", "telephone", e.target.value)} />
         <Input id="mere_email" label="Adresse mail" type="email" value={parentData.mere.email} placeholder="Ex : email@gmail.com" onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleFieldChange("mere", "email", e.target.value)} />

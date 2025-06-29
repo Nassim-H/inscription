@@ -45,8 +45,8 @@ const coursInfos = getCoursInfos(ageInt)
     
     <div className="space-y-4 border p-4 rounded-xl mb-6 ">
       <h3 className="text-lg font-semibold">Enfant {index + 1}</h3>
-      <Input id={`nom_${index}`} label="Nom" required placeholder="Ex : Mifta" value={enfantData.nom} onChange={bindText("nom")} required />
-      <Input id={`prenom_${index}`} label="Prénom" required placeholder="Ex : Anis" value={enfantData.prenom} onChange={bindText("prenom")} required />
+      <Input id={`nom_${index}`} label="Nom" required placeholder="Ex : Mifta" value={enfantData.nom} onChange={bindText("nom")}  />
+      <Input id={`prenom_${index}`} label="Prénom" required placeholder="Ex : Anis" value={enfantData.prenom} onChange={bindText("prenom")} />
 
       <div>
        <RadioGroup

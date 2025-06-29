@@ -157,7 +157,10 @@ export default function FicheAdminForm() {
 
       {ficheAdmin.modePaiement === "Virement" && (
   <div className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 rounded space-y-4">
-    <p>🏦 Merci d’effectuer le virement sur le compte indiqué.</p>
+<p>
+  🏦 Merci d’effectuer le virement sur le compte indiqué :<br />
+  <strong className="user-select: all;">FR7610278026190002041170192</strong>
+</p>
 
     <div>
       <label

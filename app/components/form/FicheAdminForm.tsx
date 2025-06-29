@@ -177,9 +177,9 @@ const [copied, setCopied] = useState(false)
 
           <button
             onClick={handleCopy}
-            className="bg-blue-600 text-white px-4 py-1.5 rounded text-sm hover:bg-blue-700 w-full md:w-auto"
+              className="bg-blue-700 text-white font-semibold py-2 px-6 rounded-xl shadow disabled:opacity-50 w-full sm:w-auto"
           >
-            {copied ? "✔️ Copié" : "📋 Copier"}
+            {copied ? "✔️ Copié" : "Copier"}
           </button>
         </div>
 

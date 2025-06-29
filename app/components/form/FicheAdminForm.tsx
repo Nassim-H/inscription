@@ -3,7 +3,6 @@
 import { useFormStore } from "@/app/state/useFormStore"
 import Input from "../ui/Input"
 import Label from "../ui/Label"
-import { useState } from "react"
 import { UploadCloud } from "lucide-react"
 import Select from "../ui/Select"
 import { CheckboxItem } from "../ui/Checkbox"
@@ -14,8 +13,6 @@ export default function FicheAdminForm() {
   const setField = useFormStore((state) => state.setFicheAdminField)
   const addPersonneAutorisee = useFormStore((state) => state.addPersonneAutorisee)
   const updatePersonneAutorisee = useFormStore((state) => state.updatePersonneAutorisee)
-
-  const [preuveVirement, setPreuveVirement] = useState<File | null>(null)
 
   const situationOptions = [
   { label: "Mariés", value: "maries" },
@@ -33,6 +30,7 @@ export default function FicheAdminForm() {
         <Label htmlFor="situation">Situation familiale</Label>
         <Select
           id="situation"
+          required
           value={ficheAdmin.situationFamiliale}
           onChange={(e) => setField("situationFamiliale", e.target.value)}
           className="w-full border p-2 rounded" options={ situationOptions}        >
@@ -45,18 +43,21 @@ export default function FicheAdminForm() {
         <Input
           id="urgenceNom"
           label="Nom personne à prévenir (urgence)"
+          required
           value={ficheAdmin.urgenceNom}
           onChange={(e) => setField("urgenceNom", e.target.value)}
         />
         <Input
           id="urgenceTel"
           label="Téléphone"
+          required
           value={ficheAdmin.urgenceTel}
           onChange={(e) => setField("urgenceTel", e.target.value)}
         />
         <Input
           id="urgenceLien"
           label="Lien avec l’enfant"
+          required
           value={ficheAdmin.urgenceLien}
           onChange={(e) => setField("urgenceLien", e.target.value)}
         />
@@ -132,6 +133,7 @@ export default function FicheAdminForm() {
         <input
           type="radio"
           name="modePaiement"
+          required
           value={value}
           checked={ficheAdmin.modePaiement === value}
           onChange={() => setField("modePaiement", value)}

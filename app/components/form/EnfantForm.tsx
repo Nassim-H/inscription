@@ -45,8 +45,8 @@ const coursInfos = getCoursInfos(ageInt)
     
     <div className="space-y-4 border p-4 rounded-xl mb-6 ">
       <h3 className="text-lg font-semibold">Enfant {index + 1}</h3>
-      <Input id={`nom_${index}`} label="Nom" placeholder="Ex : Mifta" value={enfantData.nom} onChange={bindText("nom")} required />
-      <Input id={`prenom_${index}`} label="Prénom" placeholder="Ex : Anis" value={enfantData.prenom} onChange={bindText("prenom")} required />
+      <Input id={`nom_${index}`} label="Nom" required placeholder="Ex : Mifta" value={enfantData.nom} onChange={bindText("nom")} required />
+      <Input id={`prenom_${index}`} label="Prénom" required placeholder="Ex : Anis" value={enfantData.prenom} onChange={bindText("prenom")} required />
 
       <div>
        <RadioGroup
@@ -75,21 +75,22 @@ const coursInfos = getCoursInfos(ageInt)
         step={1}
         className="w-full sm:w-32"
       />
-      <Input id={`date_naissance_${index}`} label="Date de naissance"  type="date" value={enfantData.date_naissance ?? ""} onChange={bindText("date_naissance")} />
-      <Input id={`lieu_naissance_${index}`} label="Lieu de naissance" placeholder="Ex : Béthune" value={enfantData.lieu_naissance ?? ""} onChange={bindText("lieu_naissance")} />
-      <Input id={`ecole_${index}`} label="École fréquentée (2025/2026)" placeholder="Ex : Collège Jean-Moulin" value={enfantData.ecole ?? ""} onChange={bindText("ecole")} />
-      <Input id={`classe_${index}`} label="Classe" placeholder="Ex : 6ème" value={enfantData.classe} onChange={bindText("classe")} />
-      <Input id={`asso_${index}`} label="Association religieuse fréquentée ?" placeholder="Ex : Oui, mosquée de Abou Bakr Essedik à Roubaix" value={enfantData.asso} onChange={bindText("asso")} />
-      <Input id={`interets_${index}`} label="Centres d’intérêts" value={enfantData.interets} placeholder="Ex : Sport" onChange={bindText("interets")} />
-      <Input id={`extrascolaires_${index}`} label="Activités extra-scolaires"  placeholder="Ex : Club de foot" value={enfantData.extrascolaires} onChange={bindText("extrascolaires")}/>
-      <Input id={`maladies_${index}`} label="Maladies / Allergies" value={enfantData.maladies} placeholder="Ex : Allergies aux acariens" onChange={bindText("maladies")} />
-      <Input id={`traitements_${index}`} label="Traitements" value={enfantData.traitements} placeholder="Ex : Asthme" onChange={bindText("traitements")} />
+      <Input id={`date_naissance_${index}`} label="Date de naissance" required type="date" value={enfantData.date_naissance ?? ""} onChange={bindText("date_naissance")} />
+      <Input id={`lieu_naissance_${index}`} label="Lieu de naissance" required placeholder="Ex : Béthune" value={enfantData.lieu_naissance ?? ""} onChange={bindText("lieu_naissance")} />
+      <Input id={`ecole_${index}`} label="École fréquentée (2025/2026)" required placeholder="Ex : Collège Jean-Moulin" value={enfantData.ecole ?? ""} onChange={bindText("ecole")} />
+      <Input id={`classe_${index}`} label="Classe" placeholder="Ex : 6ème" required value={enfantData.classe} onChange={bindText("classe")} />
+      <Input id={`asso_${index}`} label="Association religieuse fréquentée ?" required placeholder="Ex : Oui, mosquée de Abou Bakr Essedik à Roubaix" value={enfantData.asso} onChange={bindText("asso")} />
+      <Input id={`interets_${index}`} label="Centres d’intérêts" required value={enfantData.interets} placeholder="Ex : Sport" onChange={bindText("interets")} />
+      <Input id={`extrascolaires_${index}`} label="Activités extra-scolaires" required placeholder="Ex : Club de foot" value={enfantData.extrascolaires} onChange={bindText("extrascolaires")}/>
+      <Input id={`maladies_${index}`} label="Maladies / Allergies" required value={enfantData.maladies} placeholder="Ex : Allergies aux acariens" onChange={bindText("maladies")} />
+      <Input id={`traitements_${index}`} label="Traitements" required value={enfantData.traitements} placeholder="Ex : Asthme" onChange={bindText("traitements")} />
 
       <div>
         <Label htmlFor={`observations_${index}`}>Observations à préciser (handicap, accompagnement…)</Label>
         <textarea
           id={`observations_${index}`}
           value={enfantData.observations}
+          required
           onChange={(e) => handleFieldChange("observations", e.target.value)}
           placeholder="Ex : Handicap moteur léger"
           className="w-full border rounded p-2"
@@ -102,6 +103,7 @@ const coursInfos = getCoursInfos(ageInt)
     type="checkbox"
     id={`sortie_seule_${index}`}
     checked={enfantData.sortieSeul}
+    required
     onChange={(e) => handleFieldChange("sortieSeul", e.target.checked)}
   />
   <label htmlFor={`sortie_seule_${index}`}>
@@ -136,6 +138,7 @@ const coursInfos = getCoursInfos(ageInt)
   <input
     id={`assurance_${enfantData.nom}_${enfantData.prenom}`}
     type="file"
+    required
     accept="application/pdf,image/*"
     className="hidden"
     onChange={(e) => {

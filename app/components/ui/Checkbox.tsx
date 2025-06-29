@@ -11,6 +11,7 @@ export function CheckboxItem({ id, label, checked, onChange }: CheckboxItemProps
       <input
         type="checkbox"
         id={id}
+        required
         checked={checked}
         onChange={(e) => onChange(e.target.checked)}
         className="h-4 w-4 rounded text-blue-600 focus:ring-blue-500 border-gray-300"

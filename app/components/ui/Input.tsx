@@ -27,6 +27,7 @@ export default function Input({
         id={id}
         type={type}
         value={value}
+        required
         onChange={onChange}
         required={required}
         className={`w-full rounded-xl border border-gray-300 px-4 py-2 text-sm sm:text-base placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition ${className}`}

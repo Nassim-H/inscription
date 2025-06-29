@@ -37,6 +37,7 @@ export default function RadioGroup({
             <input
               type="radio"
               name={id}
+              required
               value={opt.value}
               checked={value === opt.value}
               onChange={() => onChange(opt.value)}
